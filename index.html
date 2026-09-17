@@ -3,109 +3,285 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Harrison Wargacki - Resume</title>
+<title>Harrison Wargacki</title>
 <style>
-body{font-family:Arial,sans-serif;margin:0;background:#f4f6f9;color:#333}
-header{background:#2563eb;color:white;padding:60px 20px;text-align:center}
-header h1{margin:0 0 8px}
-header p{margin:4px 0}
-header a{color:white;text-decoration:underline}
-main{max-width:900px;margin:auto;padding:30px}
-.section{background:white;padding:24px;margin-bottom:20px;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
-h2{color:#2563eb;margin-top:0}
-.entry{margin-bottom:18px}
-.entry:last-child{margin-bottom:0}
-.entry-header{display:flex;justify-content:space-between;flex-wrap:wrap;align-items:baseline;gap:8px}
-.entry-header h3{margin:0;font-size:1.05em}
-.entry-header .dates{color:#666;font-size:.9em;white-space:nowrap}
-.entry .org{font-style:italic;color:#555;margin:2px 0 8px}
-ul{margin:8px 0 0;padding-left:20px}
-li{margin-bottom:4px}
-.skills-list{display:flex;flex-direction:column;gap:8px}
-footer{text-align:center;padding:20px;color:#666}
+:root{
+  --bg:#ffffff;
+  --bg-dark:#000000;
+  --bg-dim:#f5f5f7;
+  --text:#1d1d1f;
+  --text-dark:#f5f5f7;
+  --text-dim:#6e6e73;
+  --accent:#0071e3;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  color:var(--text);
+  background:var(--bg);
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  height:52px;display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,0.8);
+  backdrop-filter:saturate(180%) blur(20px);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:1px solid rgba(0,0,0,0.06);
+}
+nav .nav-inner{
+  max-width:1024px;width:100%;display:flex;align-items:center;justify-content:space-between;
+  padding:0 22px;font-size:13px;font-weight:500;
+}
+nav .nav-links{display:flex;gap:28px}
+nav .nav-links a{color:var(--text);opacity:0.85;transition:opacity .2s}
+nav .nav-links a:hover{opacity:1}
+nav .nav-name{font-weight:600;font-size:14px;letter-spacing:.2px}
+
+/* HERO */
+.hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:160px 20px 100px;
+  background:linear-gradient(180deg,#000 0%,#1c1c1e 60%,#000 100%);
+  color:var(--text-dark);
+}
+.hero .kicker{font-size:19px;font-weight:600;color:#a1a1a6;margin-bottom:8px;letter-spacing:.2px}
+.hero h1{
+  font-size:clamp(44px,8vw,96px);
+  font-weight:700;
+  margin:0 0 18px;
+  letter-spacing:-0.03em;
+  line-height:1.05;
+  background:linear-gradient(180deg,#fff 0%,#a1a1a6 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero p.tagline{
+  font-size:clamp(19px,2.6vw,28px);
+  color:#d2d2d7;
+  max-width:680px;
+  margin:0 0 36px;
+  font-weight:400;
+}
+.hero .cta{display:flex;gap:18px;flex-wrap:wrap;justify-content:center}
+.btn{
+  display:inline-block;padding:12px 26px;border-radius:980px;font-size:17px;font-weight:400;
+  transition:transform .15s ease, background .2s ease;
+}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:#0077ed}
+.btn-secondary{color:var(--accent)}
+.btn-secondary:hover{text-decoration:underline}
+
+/* SECTION SHELL */
+section.block{padding:120px 20px;text-align:center}
+.block-inner{max-width:980px;margin:0 auto}
+.eyebrow{font-size:19px;font-weight:600;color:var(--text-dim);margin-bottom:10px}
+.headline{
+  font-size:clamp(32px,5vw,56px);font-weight:700;letter-spacing:-0.02em;
+  margin:0 0 20px;line-height:1.08;
+}
+.subhead{font-size:clamp(18px,2.2vw,24px);color:var(--text-dim);max-width:720px;margin:0 auto 60px;font-weight:400}
+
+.dim{background:var(--bg-dim)}
+.dark{background:#000;color:var(--text-dark)}
+.dark .subhead{color:#a1a1a6}
+.dark .eyebrow{color:#a1a1a6}
+
+/* fade-in-on-scroll */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease, transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* EXPERIENCE CARDS */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;text-align:left}
+.card{
+  background:#1c1c1e;border-radius:22px;padding:34px;
+}
+.card .role{font-size:22px;font-weight:600;margin:0 0 2px}
+.card .org{font-size:15px;color:#a1a1a6;margin:0 0 4px}
+.card .dates{font-size:13px;color:#8e8e93;margin:0 0 18px}
+.card ul{margin:0;padding-left:18px;color:#d2d2d7;font-size:15px;line-height:1.6}
+.card li{margin-bottom:8px}
+
+/* EDUCATION */
+.edu-card{
+  background:#fff;border-radius:28px;padding:48px;text-align:left;
+  box-shadow:0 20px 60px rgba(0,0,0,0.08);max-width:760px;margin:0 auto;
+}
+.edu-card h3{font-size:28px;margin:0 0 4px;font-weight:700}
+.edu-card .school{font-size:17px;color:var(--text-dim);margin:0 0 20px}
+.edu-card .grad{display:inline-block;background:var(--bg-dim);border-radius:980px;padding:6px 16px;font-size:14px;font-weight:600;color:var(--accent);margin-bottom:22px}
+.tag-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.tag{background:var(--bg-dim);border-radius:980px;padding:8px 16px;font-size:14px;color:var(--text);font-weight:500}
+
+/* SKILLS */
+.skill-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:40px;text-align:left;margin-top:20px}
+.skill-groups h4{font-size:15px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-dim);margin:0 0 16px;font-weight:600}
+.pill-row{display:flex;flex-wrap:wrap;gap:10px}
+.pill{background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:980px;padding:9px 18px;font-size:15px;font-weight:500;box-shadow:0 1px 2px rgba(0,0,0,0.04)}
+
+/* CONTACT / FOOTER */
+footer{background:#000;color:#f5f5f7;padding:100px 20px 40px;text-align:center}
+footer h2{font-size:clamp(30px,5vw,48px);font-weight:700;margin:0 0 16px;letter-spacing:-0.02em}
+footer p.sub{color:#a1a1a6;font-size:18px;margin:0 0 34px}
+.contact-links{display:flex;gap:26px;justify-content:center;flex-wrap:wrap;margin-bottom:60px}
+.contact-links a{font-size:17px;color:var(--accent)}
+.contact-links a:hover{text-decoration:underline}
+footer .legal{border-top:1px solid rgba(255,255,255,0.15);padding-top:24px;color:#6e6e73;font-size:12px}
 </style>
 </head>
 <body>
-<header>
-<h1>Harrison Wargacki</h1>
-<p>Program Management &bull; Marketing &bull; Logistics</p>
-<p>(513) 615-8126 | <a href="mailto:wargackih@xavier.edu">wargackih@xavier.edu</a> | <a href="https://www.linkedin.com/in/harrisonwargacki" target="_blank" rel="noopener">linkedin.com/in/harrisonwargacki</a></p>
-<p>Cincinnati, OH</p>
-</header>
-<main>
 
-<div class="section">
-<h2>Professional Summary</h2>
-<p>Management undergraduate with hands-on experience managing day-to-day operations, technology upgrades, and facility oversight within a family-owned company and as a Test Center Administrator. Skilled in project management, software training, and process improvement. Seeking to expand knowledge in management and logistics through practical experience.</p>
-</div>
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-name">Harrison Wargacki</a>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#education">Education</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
 
-<div class="section">
-<h2>Education</h2>
-<div class="entry">
-<div class="entry-header">
-<h3>Xavier University, Cincinnati, OH</h3>
-<span class="dates">Expected Graduation: May 2027</span>
-</div>
-<p class="org">Bachelor of Science in Business Administration, Management &mdash; Minor: Human Resource Management</p>
-<ul>
-<li>Relevant Coursework: Change Management, Organizational Management, Business and Professional Communication, Conflicts and Negotiation, Management of Business Technology, Project Management, Operations and Supply Chain Management, Managing AI and Emerging Technology</li>
-</ul>
-</div>
-</div>
+<section class="hero">
+  <div class="kicker">Harrison Wargacki</div>
+  <h1>Operations.<br>Technology.<br>Momentum.</h1>
+  <p class="tagline">A management undergraduate at Xavier University who turns complex operations into simple, working systems &mdash; across 21 facilities, nine states, and everything in between.</p>
+  <div class="cta">
+    <a class="btn btn-primary" href="#experience">See the work</a>
+    <a class="btn btn-secondary" href="#contact">Get in touch &rsaquo;</a>
+  </div>
+</section>
 
-<div class="section">
-<h2>Experience</h2>
+<section id="about" class="block reveal">
+  <div class="block-inner">
+    <div class="eyebrow">About</div>
+    <h2 class="headline">Built to manage the moving parts.</h2>
+    <p class="subhead">Program management, marketing, and logistics undergraduate with hands-on experience running day-to-day operations, technology upgrades, and facility oversight &mdash; skilled in project management, software training, and process improvement, and always looking for the next practical challenge in management and logistics.</p>
+  </div>
+</section>
 
-<div class="entry">
-<div class="entry-header">
-<h3>Test Center Administrator</h3>
-<span class="dates">May 2024 - Present</span>
-</div>
-<p class="org">HHD Aviation LLC, Hamilton, Ohio</p>
-<ul>
-<li>Managed daily operations across 21 facilities in 9 states and the District of Columbia, ensuring seamless coordination amongst 114 employees and five separate prime contractors.</li>
-<li>Oversaw upgrades for facilities, introducing new testing software to streamline operational workflows.</li>
-<li>Authorized to administer and process BCI and FBI biometric fingerprint background checks and Form I-9 employment verifications, ensuring strict adherence to federal and state compliance standards.</li>
-<li>Contributed to the development and design of facilities at each of the 21 locations, ensuring full regulatory compliance and optimized operational layout.</li>
-</ul>
-</div>
+<section id="experience" class="block dark reveal">
+  <div class="block-inner">
+    <div class="eyebrow">Experience</div>
+    <h2 class="headline">Where the work happens.</h2>
+    <p class="subhead">From coast-to-coast facility operations to hands-on IT deployment and community leadership.</p>
+    <div class="card-grid">
+      <div class="card">
+        <p class="role">Test Center Administrator</p>
+        <p class="org">HHD Aviation LLC &middot; Hamilton, Ohio</p>
+        <p class="dates">May 2024 &ndash; Present</p>
+        <ul>
+          <li>Managed daily operations across 21 facilities in 9 states and the District of Columbia, coordinating 114 employees and five prime contractors.</li>
+          <li>Oversaw facility technology upgrades, introducing new testing software to streamline workflows.</li>
+          <li>Authorized to administer BCI/FBI biometric background checks and Form I-9 verifications under strict federal and state compliance.</li>
+          <li>Contributed to facility design across all 21 locations, ensuring regulatory compliance and optimized layout.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <p class="role">Local IT</p>
+        <p class="org">HHD Aviation LLC &middot; Hamilton, Ohio</p>
+        <p class="dates">May 2026 &ndash; Present</p>
+        <ul>
+          <li>Built, configured, and deployed standardized testing workstations across 21 facilities, managing full hardware lifecycles.</li>
+          <li>Ran complete asset inventory audits across all locations for accountability and compliance.</li>
+          <li>Delivered tier-1/tier-2 technical support and remote troubleshooting to minimize testing downtime.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <p class="role">Project Leader</p>
+        <p class="org">Eagle Scout &middot; West Chester, Ohio</p>
+        <p class="dates">July 2022 &ndash; December 2022</p>
+        <ul>
+          <li>Independently designed and planned a comprehensive student study space upgrade from concept to final specifications.</li>
+          <li>Directed a team of 30 volunteers to complete the buildout on schedule, funded through a self-developed donation plan.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
 
-<div class="entry">
-<div class="entry-header">
-<h3>Local IT</h3>
-<span class="dates">May 2026 - Present</span>
-</div>
-<p class="org">HHD Aviation LLC, Hamilton, Ohio</p>
-<ul>
-<li>Built, configured, and deployed standardized testing workstations across 21 testing facilities, managing full hardware lifecycles from provisioning to decommissioning legacy machines.</li>
-<li>Managed complete asset inventory audits across all 21 locations, tracking workstation and network hardware to maintain accountability and compliance.</li>
-<li>Provided dedicated tier-1/tier-2 technical support and remote troubleshooting to resolve hardware, software, and connectivity issues, minimizing testing downtime.</li>
-</ul>
-</div>
+<section id="education" class="block dim reveal">
+  <div class="block-inner">
+    <div class="eyebrow">Education</div>
+    <h2 class="headline">Learning with a purpose.</h2>
+    <div class="edu-card">
+      <span class="grad">Expected Graduation &middot; May 2027</span>
+      <h3>Xavier University</h3>
+      <p class="school">Cincinnati, OH &middot; B.S. Business Administration, Management &mdash; Minor in Human Resource Management</p>
+      <div class="tag-row">
+        <span class="tag">Change Management</span>
+        <span class="tag">Organizational Management</span>
+        <span class="tag">Business &amp; Professional Communication</span>
+        <span class="tag">Conflicts &amp; Negotiation</span>
+        <span class="tag">Management of Business Technology</span>
+        <span class="tag">Project Management</span>
+        <span class="tag">Operations &amp; Supply Chain Management</span>
+        <span class="tag">Managing AI &amp; Emerging Technology</span>
+      </div>
+    </div>
+  </div>
+</section>
 
-<div class="entry">
-<div class="entry-header">
-<h3>Project Leader</h3>
-<span class="dates">July 2022 - December 2022</span>
-</div>
-<p class="org">Eagle Scout, West Chester, Ohio</p>
-<ul>
-<li>Independently designed and planned a comprehensive student study space upgrade from concept to final specifications.</li>
-<li>Directed a team of 30 volunteers to execute the buildout on schedule while securing all required material funding through a self-developed donation plan.</li>
-</ul>
-</div>
+<section id="skills" class="block reveal">
+  <div class="block-inner">
+    <div class="eyebrow">Skills</div>
+    <h2 class="headline">Tools of the trade.</h2>
+    <div class="skill-groups">
+      <div>
+        <h4>Business &amp; Analytics Software</h4>
+        <div class="pill-row">
+          <span class="pill">Microsoft Office</span>
+          <span class="pill">Google Workspace</span>
+          <span class="pill">Tableau</span>
+        </div>
+      </div>
+      <div>
+        <h4>Testing &amp; Credentialing Platforms</h4>
+        <div class="pill-row">
+          <span class="pill">Fieldprint</span>
+          <span class="pill">Meazure Learning</span>
+          <span class="pill">PSI</span>
+          <span class="pill">Kryterion</span>
+          <span class="pill">Talogy</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-</div>
+<footer id="contact">
+  <h2>Let's talk.</h2>
+  <p class="sub">Cincinnati, OH &middot; Open to opportunities in management and logistics.</p>
+  <div class="contact-links">
+    <a href="mailto:wargackih@xavier.edu">wargackih@xavier.edu</a>
+    <a href="tel:+15136158126">(513) 615-8126</a>
+    <a href="https://www.linkedin.com/in/harrisonwargacki" target="_blank" rel="noopener">LinkedIn</a>
+  </div>
+  <div class="legal">&copy; 2026 Harrison Wargacki. All rights reserved.</div>
+</footer>
 
-<div class="section">
-<h2>Skills</h2>
-<div class="skills-list">
-<p><strong>Business &amp; Analytics Software:</strong> Microsoft Office, Google Workspace, Tableau</p>
-<p><strong>Testing &amp; Credentialing Platforms:</strong> Fieldprint-Fingerprinting, Meazure Learning, PSI, Kryterion, Talogy</p>
-</div>
-</div>
+<script>
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, {threshold:0.15});
+  els.forEach(function(el){ io.observe(el); });
+})();
+</script>
 
-</main>
-<footer>&copy; 2026 Harrison Wargacki</footer>
 </body>
 </html>
